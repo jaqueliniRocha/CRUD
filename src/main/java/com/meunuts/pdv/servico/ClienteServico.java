@@ -1,5 +1,7 @@
 package com.meunuts.pdv.servico;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,16 +18,16 @@ public class ClienteServico {
 		clienteRepositorio.save(cliente);
 	}
 	
-	public void remover(String id) {
-		// TODO Auto-generated method stub
+	public void remover(long id) {
+		clienteRepositorio.delete(id);
 	}
 	
-	public void procurarPorId(String id) {
-		// TODO Auto-generated method stub
+	public Cliente procurarPorId(long id) {
+		return clienteRepositorio.findOne(id);
 	}
 	
-	public void procurarTodos() {
-		// TODO Auto-generated method stub
+	public List<Cliente> procurarTodos() {
+		return clienteRepositorio.findAll();
 	}
 	
 

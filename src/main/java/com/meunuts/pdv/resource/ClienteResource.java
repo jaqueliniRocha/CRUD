@@ -2,6 +2,8 @@ package com.meunuts.pdv.resource;
 
 
 
+import java.util.List;
+
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -10,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -25,21 +28,23 @@ public class ClienteResource {
 	private ClienteServico clienteServico;
 	
 	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	public String criar(Cliente cliente) {
+	public Response criar(Cliente cliente) {
 		clienteServico.salvar(cliente);
-		return "salvo";
+		return Response.ok().build();
 	}
 	
 	@GET
-	public String procurarTodos() {
-		return "Hello procurarTodos!";
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response procurarTodos() {
+		List<Cliente> todosClientes = clienteServico.procurarTodos();
+		return Response.ok(todosClientes).build();
 	}
 	
 	@GET
 	@Path("/{id}")
-	public String procurarPorId(@PathParam("id") String id) {
-		return "Hello World com " + id;
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response procurarPorId(@PathParam("id") long id) {
+		return Response.ok(clienteServico.procurarPorId(id)).build();
 	}
 	
 	@DELETE
