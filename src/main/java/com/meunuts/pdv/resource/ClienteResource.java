@@ -52,8 +52,9 @@ public class ClienteResource {
 		return Response.ok().build();
 	}
 
-	@PUT
-	public String atualizar() {
-		return "Hello atualizar!";
-	}
+/*	@PUT
+	public Response atualizar() {
+		clienteServico.at(cliente);
+		return Response.ok().build();
+	}*/
 }

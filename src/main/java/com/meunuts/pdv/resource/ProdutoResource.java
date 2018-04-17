@@ -1,5 +1,7 @@
 package com.meunuts.pdv.resource;
 
+import java.util.List;
+
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -8,39 +10,51 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.meunuts.pdv.model.Produto;
+import com.meunuts.pdv.servico.ProdutoServico;
 
 @Component
 @Path("/produto")
 public class ProdutoResource {
 	
+	
+	@Autowired
+	private ProdutoServico produtoServico;
+	
 	@POST
-	@Produces(MediaType.APPLICATION_JSON)
-	public Produto criar(Produto produto) {
-		return produto;
+	public Response criar(Produto produto) {
+		produtoServico.salvar(produto);
+		return Response.ok().build();
 	}
 	
 	@GET
-	public String procurarTodos() {
-		return "Hello procurarTodos!";
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response procurarTodos() {
+		List<Produto> todosProdutos = produtoServico.procurarTodos();
+		return Response.ok(todosProdutos).build();
 	}
 	
 	@GET
 	@Path("/{id}")
-	public String procurarPorId(@PathParam("id") String id) {
-		return "Hello World com " + id;
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response procurarPorId(@PathParam("id") long id) {
+		return Response.ok(produtoServico.procurarPorId(id)).build();
 	}
 	
 	@DELETE
-	public String deletar() {
-		return "Hello deletar!";
+	@Path("/{id}")
+	public Response deletar(@PathParam("id") long id) {
+		produtoServico.remover(id);
+		return Response.ok().build();
 	}
 	
-	@PUT
-	public String atualizar() {
-		return "Hello atualizar!";
-	}
+	/*@PUT
+	public Response atualizar() {
+		return ;
+	}*/
 }
