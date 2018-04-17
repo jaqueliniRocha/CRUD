@@ -1,7 +1,5 @@
 package com.meunuts.pdv.resource;
 
-
-
 import java.util.List;
 
 import javax.ws.rs.DELETE;
@@ -23,35 +21,37 @@ import com.meunuts.pdv.servico.ClienteServico;
 @Component
 @Path("/cliente")
 public class ClienteResource {
-	
+
 	@Autowired
 	private ClienteServico clienteServico;
-	
+
 	@POST
 	public Response criar(Cliente cliente) {
 		clienteServico.salvar(cliente);
 		return Response.ok().build();
 	}
-	
+
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response procurarTodos() {
 		List<Cliente> todosClientes = clienteServico.procurarTodos();
 		return Response.ok(todosClientes).build();
 	}
-	
+
 	@GET
 	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response procurarPorId(@PathParam("id") long id) {
 		return Response.ok(clienteServico.procurarPorId(id)).build();
 	}
-	
+
 	@DELETE
-	public String deletar() {
-		return "Hello deletar!";
+	@Path("/{id}")
+	public Response deletar(@PathParam("id") long id) {
+		clienteServico.remover(id);
+		return Response.ok().build();
 	}
-	
+
 	@PUT
 	public String atualizar() {
 		return "Hello atualizar!";
