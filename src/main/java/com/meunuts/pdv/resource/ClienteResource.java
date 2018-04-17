@@ -11,18 +11,24 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.meunuts.pdv.model.Cliente;
+import com.meunuts.pdv.servico.ClienteServico;
 
 @Component
 @Path("/cliente")
 public class ClienteResource {
 	
+	@Autowired
+	private ClienteServico clienteServico;
+	
 	@POST
 	@Produces(MediaType.APPLICATION_JSON)
-	public Cliente criar(Cliente cliente) {
-		return cliente;
+	public String criar(Cliente cliente) {
+		clienteServico.salvar(cliente);
+		return "salvo";
 	}
 	
 	@GET
