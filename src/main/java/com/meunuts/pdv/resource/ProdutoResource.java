@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.meunuts.pdv.model.Cliente;
 import com.meunuts.pdv.model.Produto;
 import com.meunuts.pdv.servico.ProdutoServico;
 
@@ -53,8 +54,15 @@ public class ProdutoResource {
 		return Response.ok().build();
 	}
 	
-	/*@PUT
-	public Response atualizar() {
-		return ;
-	}*/
+	@PUT
+	@Path("/{id}")
+	public Response atualizar(@PathParam("id") long id, Produto produtoAtualizado) {
+		Produto procurarPorId = produtoServico.procurarPorId(id);
+		if(procurarPorId == null) {
+			return Response.status(404).build();
+		}
+		produtoAtualizado.setId(id);
+		produtoServico.salvar(produtoAtualizado);
+		return Response.ok().build();
+	}
 }

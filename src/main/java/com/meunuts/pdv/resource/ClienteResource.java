@@ -52,9 +52,15 @@ public class ClienteResource {
 		return Response.ok().build();
 	}
 
-/*	@PUT
-	public Response atualizar() {
-		clienteServico.at(cliente);
+	@PUT
+	@Path("/{id}")
+	public Response atualizar(@PathParam("id") long id, Cliente clienteAtualizado) {
+		Cliente procurarPorId = clienteServico.procurarPorId(id);
+		if(procurarPorId == null) {
+			return Response.status(404).build();
+		}
+		clienteAtualizado.setId(id);
+		clienteServico.salvar(clienteAtualizado);
 		return Response.ok().build();
-	}*/
+	}
 }
