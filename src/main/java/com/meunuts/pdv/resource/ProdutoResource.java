@@ -2,6 +2,7 @@ package com.meunuts.pdv.resource;
 
 import java.util.List;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,11 +15,12 @@ import javax.ws.rs.core.Response;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.CrossOrigin;
 
-import com.meunuts.pdv.model.Cliente;
 import com.meunuts.pdv.model.Produto;
 import com.meunuts.pdv.servico.ProdutoServico;
 
+@CrossOrigin
 @Component
 @Path("/produto")
 public class ProdutoResource {
@@ -28,6 +30,7 @@ public class ProdutoResource {
 	private ProdutoServico produtoServico;
 	
 	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
 	public Response criar(Produto produto) {
 		produtoServico.salvar(produto);
 		return Response.ok().build();
