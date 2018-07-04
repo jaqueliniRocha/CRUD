@@ -106,10 +106,8 @@
                     headers: {
                             'Content-Type': 'application/json' 
                     },
-                    data: JSON.stringify(obj),
                     success: function(data, textStatus, xhr) {
-                        $('#alertExcluido').fadeTo(500,1);
-                        $("#alertExcluido").fadeOut(3000);
+                        $(location).attr('href', 'listaProduto.html')
                     }
                 });
             });
