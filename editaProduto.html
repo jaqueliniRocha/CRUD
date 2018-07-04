@@ -55,7 +55,8 @@
                             <input type="text" class="form-control" name="descricao" id="descricao" placeholder="descricao">
                         </div>
 
-                        <button type="button" id="salvar" class="btn btn-primary">Cadastrar</button>
+                        <button type="button" id="salvar" class="btn btn-primary">Salvar</button>
+                        <button type="button" id="remover" class="btn btn-danger">Remover</button>
                         <a href="listaProduto.html" class="btn btn-default">Voltar</a>
                     </form>
                 </div>
@@ -63,25 +64,54 @@
         </div>
     </div>
 
-    <div class="alert alert-success" role="alert" id="alert" style="margin: 10px; opacity:0">
-        Salvo com sucesso!
+    <div class="alert alert-success" role="alert" id="alertExcluido" style="margin: 10px; opacity:0">
+        Excluído com sucesso!
     </div>
 
     <script>
-        $("#salvar").click(function() {
-            var obj = { "nome": $("#nome").val(), "descricao": $("#descricao").val() };
-            $.ajax({
-                type: "POST",
-                url: "http://localhost:8080/produto",
-                headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json' 
-                    },
-                data: JSON.stringify(obj),
-                success: function(data, textStatus, xhr) {
-                    $('#alert').fadeTo(500,1);
-                    $("#alert").fadeOut(3000);
+        var getUrlParameter = function getUrlParameter(sParam) {
+            var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+                sURLVariables = sPageURL.split('&'),
+                sParameterName,
+                i;
+
+            for (i = 0; i < sURLVariables.length; i++) {
+                sParameterName = sURLVariables[i].split('=');
+
+                if (sParameterName[0] === sParam) {
+                    return sParameterName[1] === undefined ? true : sParameterName[1];
                 }
+            }
+        };
+
+        $(document).ready(function() {
+            var id = getUrlParameter('id');
+
+            $.ajax({
+                type: "GET",
+                url: "http://localhost:8080/produto/"+id,
+                headers: {
+                    'Accept': 'application/json'
+                },
+                success: function (data) {
+                    $('#nome').val(data.nome);
+                    $('#descricao').val(data.descricao);
+                }
+            })
+
+            $("#remover").click(function() {
+                $.ajax({
+                    type: "DELETE",
+                    url: "http://localhost:8080/produto/"+id,
+                    headers: {
+                            'Content-Type': 'application/json' 
+                    },
+                    data: JSON.stringify(obj),
+                    success: function(data, textStatus, xhr) {
+                        $('#alertExcluido').fadeTo(500,1);
+                        $("#alertExcluido").fadeOut(3000);
+                    }
+                });
             });
         });
     </script>
