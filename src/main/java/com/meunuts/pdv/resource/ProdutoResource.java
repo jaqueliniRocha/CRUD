@@ -57,7 +57,7 @@ public class ProdutoResource {
 		return Response.ok().build();
 	}
 	
-	@PUT
+	@POST
 	@Path("/{id}")
 	public Response atualizar(@PathParam("id") long id, Produto produtoAtualizado) {
 		Produto procurarPorId = produtoServico.procurarPorId(id);

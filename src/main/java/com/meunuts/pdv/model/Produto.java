@@ -10,7 +10,6 @@ import lombok.Data;
 @Entity
 public class Produto {
 
-	
 	@Id
 	@GeneratedValue
 	private long id;

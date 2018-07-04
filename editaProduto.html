@@ -111,6 +111,22 @@
                     }
                 });
             });
+
+            $("#salvar").click(function() {
+                var obj = { "nome": $("#nome").val(), "descricao": $("#descricao").val() };
+                $.ajax({
+                    type: "POST",
+                    url: "http://localhost:8080/produto/"+id,
+                    headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json' 
+                        },
+                    data: JSON.stringify(obj),
+                    success: function(data, textStatus, xhr) {
+                        $(location).attr('href', 'listaProduto.html')
+                    }
+                });
+            });
         });
     </script>
 
