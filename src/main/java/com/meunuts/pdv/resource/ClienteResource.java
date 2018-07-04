@@ -52,7 +52,7 @@ public class ClienteResource {
 		return Response.ok().build();
 	}
 
-	@PUT
+	@POST
 	@Path("/{id}")
 	public Response atualizar(@PathParam("id") long id, Cliente clienteAtualizado) {
 		Cliente procurarPorId = clienteServico.procurarPorId(id);

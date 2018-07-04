@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+</head>
+<body>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../paginaInicial.html">Meu Nuts</a>
+      </div>
+
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+          <li><a href="../produto/listaProduto.html">Produtos</a></li>
+          <li><a href="../cliente/listaCliente.html">Clientes</a></li>
+        </ul>
+      </div>
+
+    </div>
+    
+  </nav>
+
+    <div class="container">
+        <div class="row" style="margin-top: 50px;">
+            <div class="col-md-12">
+                <h1>Cadastro de Cliente</h1>
+
+                <div class="col-md-6">
+                    <form id="frm" action="/" method="post">
+
+                        <div class="form-group">
+                            <label for="nome">Nome</label>
+                            <input type="text" class="form-control" name="nome" id="nome" placeholder="Nome">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="cpf">CPF</label>
+                            <input type="text" class="form-control" name="cpf" id="cpf" placeholder="cpf">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="endereco">Endereço</label>
+                            <input type="text" class="form-control" name="endereco" id="endereco" placeholder="Endereço">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="celular">Celular</label>
+                            <input type="text" class="form-control" name="celular" id="celular" placeholder="Celular">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" name="email" id="email" placeholder="Email">
+                        </div>
+
+                        <button type="button" id="salvar" class="btn btn-primary">Cadastrar</button>
+                        <a href="listaCliente.html" class="btn btn-default">Voltar</a>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="alert alert-success" role="alert" id="alert" style="margin: 10px; opacity:0">
+        Salvo com sucesso!
+    </div>
+
+    <script>
+        $("#salvar").click(function() {
+            var obj = { "nome": $("#nome").val(), 
+                        "cpf": $("#cpf").val(),
+                        "endereco": $("#endereco").val(),
+                        "celular": $("#celular").val(),
+                        "email": $("#email").val()
+                       };
+            
+            $.ajax({
+                type: "POST",
+                url: "http://localhost:8080/cliente",
+                headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json' 
+                    },
+                data: JSON.stringify(obj),
+                success: function(data, textStatus, xhr) {
+                    $('#alert').fadeTo(500,1);
+                    $("#alert").fadeOut(3000);
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

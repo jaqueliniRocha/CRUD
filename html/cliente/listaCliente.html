@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+  <style>
+        body {
+            margin: 40px;
+        }
+
+        .box {
+            border-radius: 5px;
+            padding: 20px;
+            font-size: 150%;
+            border:1px solid #000;
+            font-size: 15px 
+        }
+
+        .wrapper {
+            display: grid;
+            grid-gap: 10px;
+            grid-template-columns: repeat(auto-fill, minmax(200px,1fr));
+            margin-bottom: 2em;
+        }
+   </style>
+</head>
+<body>
+
+  <nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="../paginaInicial.html">Meu Nuts</a>
+      </div>
+
+      <div id="navbar" class="collapse navbar-collapse">
+        <ul class="nav navbar-nav">
+            <li><a href="../produto/listaProduto.html">Produtos</a></li>
+            <li><a href="../cliente/listaCliente.html">Clientes</a></li>
+        </ul>
+      </div>
+
+    </div>
+    
+  </nav>
+
+<div class="container">
+    <div class="row" style="margin-top: 50px;">
+        <div class="col-md-12">
+            <h1>Lista de Clientes</h1>
+
+            <a href="cadastraCliente.html" class="btn btn-primary" style="margin:10px">Novo</a>
+
+            <div class="wrapper">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/cliente",
+            headers: {
+                'Accept': 'application/json'
+            },
+            success: function (data) {
+                $.each(data, function(index, value) {
+                    $(".wrapper").append("<div class=\"box\">" +
+                                        "<img src=\"../img/image.JPG\">" +
+                                        "Nome: " + value.nome + "<br>CPF: "+ value.cpf +
+                                        "<a href=\"editaCliente.html?id=" + value.id + "\" class=\"btn btn-default\">Mais Informações</a>" +
+                                        "</div>"
+                                );
+                });
+            }
+        })
+    });
+</script>
+
+</body>
+</html>
